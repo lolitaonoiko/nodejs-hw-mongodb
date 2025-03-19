@@ -1,4 +1,5 @@
 import createHttpError from 'http-errors';
+
 import {
   createContact,
   getAllContacts,
@@ -6,9 +7,20 @@ import {
   deleteContact,
   updateContact,
 } from '../services/contacts.js';
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { parseSortParams } from '../utils/parseSortParams.js';
 
 export const getContactsController = async (req, res) => {
-  const contacts = await getAllContacts();
+  const { page, perPage } = parsePaginationParams(req.query);
+
+  const { sortBy, sortOrder } = parseSortParams(req.query);
+
+  const contacts = await getAllContacts({
+    page,
+    perPage,
+    sortBy,
+    sortOrder,
+  });
 
   res.json({
     status: 200,
@@ -27,7 +39,7 @@ export const getContactByIdController = async (req, res) => {
 
   res.json({
     status: 200,
-    message: `Successfully found student with id ${contactId}!`,
+    message: `Successfully found contact with id ${contactId}!`,
     data: contact,
   });
 };
