@@ -2,6 +2,7 @@ import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+// import path from 'node:path';
 
 import { getEnvVar } from './utils/getEnvVar.js';
 import contactsRouter from './routers/contacts.js';
@@ -14,6 +15,10 @@ const PORT = Number(getEnvVar('PORT', '3000'));
 
 export const setUpServer = () => {
   const app = express();
+
+  // app.use(
+  //   express.static('/uploads', path.join(process.cwd(), 'src', 'uploads')),
+  // );
 
   app.use(cors());
   app.use(cookieParser());
