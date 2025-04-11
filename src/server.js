@@ -1,8 +1,9 @@
+import * as fs from 'node:fs';
 import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-// import path from 'node:path';
+import swaggerUIExpress from 'swagger-ui-express';
 
 import { getEnvVar } from './utils/getEnvVar.js';
 import contactsRouter from './routers/contacts.js';
@@ -10,19 +11,23 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import authRouter from './routers/auth.js';
 import { authenticate } from './middlewares/authenticate.js';
+import { SWAGGER_DIR } from './constants/index.js';
 
 const PORT = Number(getEnvVar('PORT', '3000'));
 
 export const setUpServer = () => {
-  const app = express();
+  const swaggerDocument = JSON.parse(fs.readFileSync(SWAGGER_DIR, 'utf-8'));
 
-  // app.use(
-  //   express.static('/uploads', path.join(process.cwd(), 'src', 'uploads')),
-  // );
+  const app = express();
 
   app.use(cors());
   app.use(cookieParser());
 
+  app.use(
+    '/api-docs',
+    swaggerUIExpress.serve,
+    swaggerUIExpress.setup(swaggerDocument),
+  );
   app.use(
     pino({
       transport: {

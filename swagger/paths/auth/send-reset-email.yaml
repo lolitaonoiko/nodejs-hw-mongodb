@@ -1,0 +1,42 @@
+tags:
+  - Auth
+summary: Send reset password email
+description: Endpoint to send a password reset email to the user. The email contains a reset token to use for changing the password.
+operationId: sendResetEmail
+security: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+        properties:
+          email:
+            type: string
+            format: email
+            example: example@mail.com
+responses:
+  '200':
+    description: Reset password email has been successfully sent.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: string
+              example: 200
+            message:
+              type: string
+              example: Reset password email has been successfully sent.
+            data:
+              example: {}
+  '400':
+    $ref: '../../components/responses/400.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'

@@ -1,0 +1,13 @@
+tags:
+  - Auth
+summary: Logout user
+description: Logout user and invalidate their session. No content returned.
+operationId: logoutUser
+security: []
+responses:
+  '204':
+    description: User successfully logged out
+  '400':
+    $ref: '../../components/responses/400.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'

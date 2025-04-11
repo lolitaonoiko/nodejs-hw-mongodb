@@ -1,0 +1,45 @@
+tags:
+  - Auth
+summary: Reset user password
+description: Endpoint to reset the password after receiving a reset token. This operation requires a valid password reset token.
+operationId: resetPassword
+security: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - password
+          - token
+        properties:
+          password:
+            type: string
+            example: 'password12345'
+          token:
+            type: string
+            example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30'
+responses:
+  '200':
+    description: Password has been successfully reset.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: string
+              example: 200
+            message:
+              type: string
+              example: Password has been successfully reset.
+            data:
+              example: {}
+  '400':
+    $ref: '../../components/responses/400.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'
