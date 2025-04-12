@@ -77,7 +77,7 @@ responses:
                   example: true
                 hasPreviousPage:
                   type: boolean
-                  example: true
+                  example: false
   '401':
     $ref: ../../components/responses/401.yaml
   '500':
